@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# This script displays numbers and special messages for specific iterations.
+
+count=1
+while [ $count -le 20 ]; do
+  case $count in
+    4)
+      echo $count
+      echo "bad luck from China"
+      ;;
+    9)
+      echo $count
+      echo "bad luck from Japan"
+      ;;
+    17)
+      echo $count
+      echo "bad luck from Italy"
+      ;;
+    *)
+      echo $count
+      ;;
+  esac
+  count=$((count + 1))
+done
+
