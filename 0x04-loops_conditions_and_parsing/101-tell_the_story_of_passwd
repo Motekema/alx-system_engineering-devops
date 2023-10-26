@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Set the Internal Field Separator (IFS) to colon
+IFS=":"
+
+# Read and process each line of the /etc/passwd file
+while read -r username password uid gid info home shell; do
+    echo "The user $username is part of the $gid gang, lives in $home and rides $shell. $uid's place is protected by the passcode $password, more info about the user here: $info"
+done < /etc/passwd
+
+# Reset IFS to its default value
+IFS=" "
+
