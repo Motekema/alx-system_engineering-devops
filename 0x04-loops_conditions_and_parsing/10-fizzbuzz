@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# This script displays numbers from 1 to 100 in a list format and follows the FizzBuzz rules.
+# It displays "Fizz" for multiples of 3, "Buzz" for multiples of 5, "FizzBuzz" for multiples of both 3 and 5, and the number itself for all other cases.
+
+for number in {1..100}; do
+  if ((number % 3 == 0)) && ((number % 5 == 0)); then
+    echo "FizzBuzz"
+  elif ((number % 3 == 0)); then
+    echo "Fizz"
+  elif ((number % 5 == 0)); then
+    echo "Buzz"
+  else
+    echo "$number"
+  fi
+done
+
