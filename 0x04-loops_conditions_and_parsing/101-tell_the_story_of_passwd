@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-
 # Set the Internal Field Separator (IFS) to colon
+
 IFS=":"
 
 # Read and process each line of the /etc/passwd file
