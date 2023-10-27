@@ -2,23 +2,5 @@
 # This script stops the 4-to-infinity-and-beyond process gracefully.
 
 # Find the process ID (PID) of the 4-to-infinity-and-beyond script.
-pidfile="4-to-infinity-and-beyond.pid"
 
-if [ -f "$pidfile" ]; then
-    pid=$(cat "$pidfile")
-    if [ -n "$pid" ]; then
-        # If the process is running, send a termination signal to it.
-        if kill -0 "$pid" 2>/dev/null; then
-            # Process exists; send a termination signal (SIGTERM).
-            kill -15 "$pid"
-            echo "Terminated"
-        else
-            echo "Process not found"
-        fi
-    else
-        echo "Invalid PID in $pidfile"
-    fi
-else
-    echo "Process not found (PID file not found)"
-fi
-
+pkill -f 4-to_infinity_and_beyond 
