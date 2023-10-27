@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 # This script displays a list of currently running processes.
-
 # Use the ps command to list all processes with the specified format
+
 ps -eo user,pid,%cpu,%mem,vsz,rss,tty,stat,start,time,command
