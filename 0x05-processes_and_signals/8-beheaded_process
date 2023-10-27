@@ -2,22 +2,5 @@
 # This script kills the 7-highlander process
 
 # Find the process ID (PID) of the 7-highlander script.
-pidfile="7-highlander.pid"
 
-if [ -f "$pidfile" ]; then
-    pid=$(cat "$pidfile")
-    if [ -n "$pid" ]; then
-        # If the process is running, send a termination signal to it.
-        if kill -0 "$pid" 2>/dev/null; then
-            # Process exists; send a termination signal (SIGTERM).
-            kill -15 "$pid"
-        else
-            echo "Process not found"
-        fi
-    else
-        echo "Invalid PID in $pidfile"
-    fi
-else
-    echo "Process not found (PID file not found)"
-fi
-
+pkill -f -SIGKILL 7-highlander
