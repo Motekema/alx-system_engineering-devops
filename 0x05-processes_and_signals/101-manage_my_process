@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+### BEGIN INIT INFO
+# Provides:          manage_my_process
+# Required-Start:    $local_fs $remote_fs
+# Required-Stop:     $local_fs $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start/stop/manage manage_my_process
+### END INIT INFO
+
+DAEMON="/path/to/manage_my_process"  
+PIDFILE="/var/run/my_process.pid"
+LOGFILE="/tmp/my_process"
+
+case "$1" in
+    start)
+        if [ -f "$PIDFILE" ]; then
+            echo "manage_my_process is already running."
+        else
+            echo "Starting manage_my_process"
+            $DAEMON &
+            echo $! > $PIDFILE
+        fi
+        ;;
+    stop)
+        if [ -f "$PIDFILE" ]; then
+            echo "Stopping manage_my_process"
+            kill $(cat "$PIDFILE")
+            rm -f "$PIDFILE"
+        else
+            echo "manage_my_process is not running."
+        fi
+        ;;
+    restart)
+        $0 stop
+        $0 start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+esac
+
+exit 0
+
