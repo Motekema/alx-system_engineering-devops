@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
+
 # Use ifconfig to get network information and filter for IPv4 addresses
-ifconfig | grep -Eo "inet (addr:)?([0-9]*\.){3}[0-9]*" | cut -b 11-
+ifconfig | grep -oE "inet ([0-9]{1,3}\.){3}[0-9]{1,3}" | cut -d ' ' -f 2
+
