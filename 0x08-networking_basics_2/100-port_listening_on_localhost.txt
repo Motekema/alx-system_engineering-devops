@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# Start listening on port 98
+nc -l -p 98 -k > /dev/null
