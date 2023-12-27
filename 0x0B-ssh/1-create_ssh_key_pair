@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # This script creates an RSA key pair with specific requirements
 
-ssh-keygen -b 4096 -f school -t rsa -N betty
+ssh-keygen -t rsa -b 4096 -C "vagrant@ubuntu" -N "betty" -f school
