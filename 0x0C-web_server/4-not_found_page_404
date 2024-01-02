@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# This script configures Nginx for a custom 404 page.
+
+# Create a configuration file for the custom 404 page
+echo "server {
+    listen 80;
+    server_name localhost;
+
+    location / {
+        root /var/www/html;
+        index index.html;
+    }
+
+    error_page 404 /404.html;
+    location = /404.html {
+        internal;
+        root /var/www/html;
+        echo 'Ceci n'\''est pas une page';
+    }
+}" > /etc/nginx/sites-available/default
+
+# Restart Nginx (without using systemctl)
+service nginx restart
