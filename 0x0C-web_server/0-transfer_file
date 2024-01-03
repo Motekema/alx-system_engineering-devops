@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # This script transfers a file from the client to a server using scp.
-
 # Check if correct number of parameters is provided
 if [ $# -lt 3 ];
 then
