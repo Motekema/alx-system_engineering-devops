@@ -1,11 +1,1 @@
-#!/usr/bin/env bash
-# This script sets up a domain name with an A record pointing to the web-01 IP address.
-
-# Assign your domain name obtained from .TECH Domains
-DOMAIN_NAME="localitservices.tech"
-
-# Configure DNS records with an A entry
-echo "$DOMAIN_NAME" > /etc/nginx/sites-available/default
-
-# Verify DNS resolution using dig
-dig "$DOMAIN_NAME"
+localitservices.tech
