@@ -1,8 +1,21 @@
 #!/bin/bash
 # This script installs Nginx on an Ubuntu machine and configures it to meet the requirements.
 
+# Update package list
+apt-get update
+
 # Install Nginx
-sudo apt-get update
-sudo apt-get -y install nginx
+apt-get -y install nginx
+
+# Create a custom index.html file
 echo 'Hello World!' > /var/www/html/index.html
+
+# Start Nginx
 service nginx start
+
+# Check if Nginx is running
+if pgrep -x "nginx" >/dev/null; then
+    echo "Nginx is running."
+else
+    echo "Error: Nginx failed to start."
+fi
