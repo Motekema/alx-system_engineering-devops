@@ -2,22 +2,7 @@
 # This script installs Nginx on an Ubuntu machine and configures it to meet the requirements.
 
 # Install Nginx
-apt-get update
-apt-get install -y nginx
-
-# Create a custom index.html file
-echo "Hello World!" > /usr/share/nginx/html/index.html
-
-# Ensure Nginx is listening on port 80
-sed -i 's/80 default_server/80 default_server;/g' /etc/nginx/sites-available/default
-
-# Restart Nginx (without using systemctl)
-/etc/init.d/nginx restart
-
-# Check if Nginx is running
-nginx_pid=$(pgrep -x nginx)
-if [ -n "$nginx_pid" ]; then
-    echo "Nginx is running on port 80."
-else
-    echo "Error: Nginx failed to start."
-fi
+sudo apt-get update
+sudo apt-get -y install nginx
+echo 'Hello World!' > /var/www/html/index.html
+service nginx start
