@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# This script fixes the issue with Apache not returning a page.
+
+# Start Apache service in the background
+service apache2 start
+
+# Keep the container running
+tail -f /dev/null
