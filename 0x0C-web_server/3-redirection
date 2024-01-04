@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-# This script configures Nginx for a 301 redirection from /redirect_me to another page.
-
-# Create a configuration file for the redirection
+# This script configures Nginx for a 301 from /redirect_me to another page.
 apt-get update
 apt-get -y install nginx
 sudo ufw allow 'Nginx HTTP'
