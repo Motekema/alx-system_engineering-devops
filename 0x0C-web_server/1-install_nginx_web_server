@@ -11,10 +11,10 @@ apt-get -y install nginx
 echo 'Hello World!' > /var/www/html/index.html
 
 # Configure Nginx to listen on port 80
-sed -i 's/80 default_server/80 default_server;/g' /etc/nginx/sites-available/default
+sed -i 's/listen 80 default_server;/listen 80;/g' /etc/nginx/sites-available/default
 
 # Restart Nginx (without using systemctl)
-/etc/init.d/nginx restart
+service nginx restart
 
 # Check if Nginx is running
 nginx_pid=$(pgrep -x nginx)
