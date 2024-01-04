@@ -4,5 +4,10 @@
 # Start Apache service in the background
 service apache2 start
 
+# Redirect Apache logs to a file
+mkdir -p /var/log/apache2
+touch /var/log/apache2/error.log
+tail -f /var/log/apache2/error.log &
+
 # Keep the container running
 tail -f /dev/null
