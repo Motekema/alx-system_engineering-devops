@@ -18,3 +18,11 @@ echo "server {
 
 # Restart Nginx (without using systemctl)
 service nginx restart
+
+# Check if Nginx is running
+nginx_pid=$(pgrep -x nginx)
+if [ -n "$nginx_pid" ]; then
+    echo "Nginx is running on port 80."
+else
+    echo "Error: Nginx failed to start."
+fi
