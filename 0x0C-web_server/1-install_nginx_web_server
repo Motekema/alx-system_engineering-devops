@@ -1,25 +1,8 @@
 #!/usr/bin/env bash
 # This script installs Nginx on an Ubuntu 16.04 LTS machine and configures it.
 
-# Update package list
-apt-get update
-
-# Install Nginx with -y option to avoid interactive prompt
-apt-get -y install nginx
-
-# Create a custom index.html file
+# Update package 
+sudo apt-get update
+sudo apt-get -y install nginx
 echo 'Hello World!' > /var/www/html/index.html
-
-# Configure Nginx to listen on port 80
-sed -i 's/listen 80 default_server;/listen 80;/g' /etc/nginx/sites-available/default
-
-# Restart Nginx (without using systemctl)
-service nginx restart
-
-# Check if Nginx is running
-nginx_pid=$(pgrep -x nginx)
-if [ -n "$nginx_pid" ]; then
-    echo "Nginx is running on port 80."
-else
-    echo "Error: Nginx failed to start."
-fi
+service nginx start
