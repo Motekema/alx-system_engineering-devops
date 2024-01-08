@@ -6,7 +6,7 @@ sudo apt-get update
 sudo apt-get install -y haproxy
 
 # Configure HAProxy
-sudo mv /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.backup  # Backup existing config
+sudo mv /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.backup
 sudo tee /etc/haproxy/haproxy.cfg > /dev/null <<EOF
 frontend http_front
   bind *:80
