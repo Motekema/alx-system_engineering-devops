@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# This script configures Nginx on a new Ubuntu machine to meet project requirements
+# The script configures Nginx on new Ubuntu machine to meet project requirement
 
 # Update and install Nginx
 sudo apt-get -y update
