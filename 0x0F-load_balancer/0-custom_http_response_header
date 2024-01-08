@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# This script configures Nginx on a new Ubuntu machine to meet project requirements
+
+# Update and install Nginx
+sudo apt-get update
+sudo apt-get install -y nginx
+
+# Create a custom Nginx configuration file
+echo "add_header X-Served-By \$hostname;" | sudo tee /etc/nginx/conf.d/custom_header
+
+# Reload Nginx to apply changes
+sudo service nginx reload
+
+# Ignore SC2154 for shellcheck
+# shellcheck disable=SC2154
