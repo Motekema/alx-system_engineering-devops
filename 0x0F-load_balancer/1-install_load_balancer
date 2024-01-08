@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# This script installs and configures HAProxy on a new Ubuntu machine
+
+# Update and install HAProxy
+sudo apt-get update
+sudo apt-get install -y haproxy
+
+# Configure HAProxy
+sudo mv /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.backup  # Backup existing config
+sudo tee /etc/haproxy/haproxy.cfg > /dev/null <<EOF
+frontend http_front
+  bind *:80
+  mode http
+  default_backend http_back
+
+backend http_back
+  mode http
+  balance roundrobin
+  server web-01 [STUDENT_ID]-web-01:80 check
+  server web-02 [STUDENT_ID]-web-02:80 check
+EOF
+
+# Restart HAProxy to apply changes
+sudo service haproxy restart
+
+# Ensure HAProxy can be managed via init script
+sudo systemctl enable haproxy.service
+
+# Verify HAProxy status
+sudo service haproxy status
