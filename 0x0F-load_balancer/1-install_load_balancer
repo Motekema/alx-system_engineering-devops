@@ -3,7 +3,7 @@
 sudo apt-get update
 sudo apt-get -y install haproxy
 # the loading balancer's configuration
-DOMAIN_NAME='flovian.tech'
+DOMAIN_NAME='localitservices.tech'
 INIT_FILE='/etc/default/haproxy'
 CONFIG_FILE='/etc/haproxy/haproxy.cfg'
 HAPROXY_LB_CONFIG=\
@@ -11,8 +11,8 @@ HAPROXY_LB_CONFIG=\
 #--$DOMAIN_NAME-params-begin--
 backend $DOMAIN_NAME-backend
         balance roundrobin
-        server 22190-web-01 44.192.74.104:80 check
-        server 22190-web-01 35.173.42.16:80 check
+        server 22190-web-01 54.160.101.199 check
+        server 22190-web-01 100.25.47.236 check
 frontend $DOMAIN_NAME-frontend
         bind *:80
         mode http
