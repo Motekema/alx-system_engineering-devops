@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# HAProxy SSL termination configuration
+
+frontend ft_ssl_termination
+    bind *:443 ssl crt /etc/ssl/private/holberton.pem
+    mode http
+    reqadd X-Forwarded-Proto:\ https
+    default_backend bk_web
+
+backend bk_web
+    mode http
+    server web-01 54.160.101.199:80 check
+    server web-02 54.90.40.0:80 check
