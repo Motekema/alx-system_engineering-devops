@@ -1,13 +1,42 @@
 #!/usr/bin/env bash
 # HAProxy SSL termination configuration
+global
+    log     /dev/log local0
+    maxconn 2048
+    user    haproxy
+    group   haproxy
+    tune.ssl.default-dh-param 2048
 
-frontend ft_ssl_termination
-    bind *:443 ssl crt /etc/ssl/private/holberton.pem
-    mode http
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    retries 3
+    option  redispatch
+    timeout connect  5000
+    timeout client  10000
+    timeout server  10000
+    option  forwardfor
+    option  http-server-close
+
+frontend www-http
+    bind   0.0.0.0:80
+    reqadd X-Forwarded-Proto:\ http
+    default_backend www-backend
+
+frontend www-https
+    bind   0.0.0.0:443 ssl crt /etc/haproxy/certs/flovian.tech.pem
     reqadd X-Forwarded-Proto:\ https
-    default_backend bk_web
+    acl    letsencrypt-acl path_beg /.well-known/acme-challenge/
+    use_backend letsencrypt-backend if letsencrypt-acl
+    default_backend www-backend
 
-backend bk_web
-    mode http
-    server web-01 54.160.101.199:80 check
-    server web-02 54.90.40.0:80 check
+backend www-backend
+    balance  roundrobin
+    redirect scheme https if !{ ssl_fc }
+    server 22190-web-01 54.160.101.199:80 check
+    server 22190-web-02 54.90.40.0:80 check
+
+backend letsencrypt-backend
+    server letsencrypt 127.0.0.1:54321
