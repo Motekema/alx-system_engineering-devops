@@ -2,30 +2,16 @@
 # This script displays information about subdomains of a given domain
 
 # Check if domain parameter is provided
-if [ -z "$1" ]; then
-    echo "Usage: $0 domain [subdomain]"
-    exit 1
-fi
-
-# Set domain variable
-domain="$1"
-
-# Check if subdomain parameter is provided
-if [ -n "$2" ]; then
-    subdomain="$2"
-else
-    subdomain="www lb-01 web-01 web-02"
-fi
-
-# Function to display information about a subdomain
-display_info() {
-    sub=$1
-    record_type=$(dig +short $sub.$domain | awk 'NR==1{print $4}')
-    destination=$(dig +short $sub.$domain | awk 'NR==1{print $1}')
-    echo "The subdomain $sub is a $record_type record and points to $destination"
+print_domain_subdomain () {
+    dig "$1" | grep -A1 'ANSWER SECTION:' | sed -r "s/$1./$2/g" | awk -F" " ' NR==2 { print "The subdomain " $1 " is a " $4 " record and points to " $5 }'
 }
 
-# Iterate over subdomains and display information
-for sub in $subdomain; do
-    display_info $sub
-done
+if [ "$#" -eq 2 ]
+then
+    print_domain_subdomain "$2.$1" "$2"
+else
+    print_domain_subdomain "www.$1" "www"
+    print_domain_subdomain "lb-01.$1" "lb-01"
+    print_domain_subdomain "web-01.$1" "web-01"
+    print_domain_subdomain "web-02.$1" "web-02"
+fi
