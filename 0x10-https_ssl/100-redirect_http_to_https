@@ -8,12 +8,12 @@ global
         group haproxy
         daemon
 
-        # Defaults SSL material locations
+        # Default SSL material locations
         ca-base /etc/ssl/certs
         crt-base /etc/ssl/private
 
-        # Sees: https://ssl-config.mozilla.org/#server=haproxy&server-version=2.0.3&config=intermediate
-        ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-S>
+        # See: https://ssl-config.mozilla.org/#server=haproxy&server-version=2.0.3&config=intermediate
+        ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
         ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
         ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
 
@@ -31,21 +31,15 @@ defaults
         errorfile 500 /etc/haproxy/errors/500.http
         errorfile 502 /etc/haproxy/errors/502.http
         errorfile 503 /etc/haproxy/errors/503.http
-        errorfile 504 /etc/haproxy/errors/504.http
+        errorfile 504 /etc/haproxy/errors/504.http 
 
-frontend clickviral-frontend
-        bind *:80
-        mode http
-        http-request redirect scheme https code 301 unless { ssl_fc }
-        http-request set-header X_Forwarded-Proto http
-        default_backend clickviral-backend
-
-frontend clickviral-frontend-https
-        bind *:443 ssl crt /etc/haproxy/certs/clickviral.tech.pem
-        http-request set-header X-Forwarded-Proto https
-        default_backend clickviral-backend
-
-backend clickviral-backend
+#--localitservices.tech-params-begins--
+backend localitservices.tech-backend
         balance roundrobin
-        server 151666-web-01 54.160.101.199:80 check
-        server 151666-web-02 54.90.40.0:80 check
+        server 22190-web-01 54.160.101.199:80 check
+        server 22190-web-02 54.90.40.0:80 check
+frontend localitservices.tech-frontend
+        bind   0.0.0.0:443 ssl crt /etc/letsencrypt/archive/www.localitservices.tech/www.localitservices.tech.pem
+        mode http
+        default_backend localitservices.tech-backend
+#--localitservices.tech-param-end--
