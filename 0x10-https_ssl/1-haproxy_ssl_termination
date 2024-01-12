@@ -1,7 +1,6 @@
 global
         log /dev/log    local0
         log /dev/log    local1 notice
-        maxconn 2048
         chroot /var/lib/haproxy
         stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
         stats timeout 30s
@@ -32,15 +31,15 @@ defaults
         errorfile 500 /etc/haproxy/errors/500.http
         errorfile 502 /etc/haproxy/errors/502.http
         errorfile 503 /etc/haproxy/errors/503.http
-        errorfile 504 /etc/haproxy/errors/504.http
+        errorfile 504 /etc/haproxy/errors/504.http 
 
-#--bluetapeent.tech-params-begins--
-backend bluetapeent.tech-backend
+#--localitservices.tech-params-begins--
+backend localitservices.tech-backend
         balance roundrobin
         server 22190-web-01 54.160.101.199:80 check
         server 22190-web-02 54.90.40.0:80 check
-frontend bluetapeent.tech-frontend
-        bind   0.0.0.0:443 ssl crt /etc/letsencrypt/archive/www.bluetapeent.tech/www.bluetapeent.tech.pem
+frontend localitservices.tech-frontend
+        bind   0.0.0.0:443 ssl crt /etc/letsencrypt/archive/www.localitservices.tech/www.localitservices.tech.pem
         mode http
-        default_backend bluetapeent.tech-backend
-#--bluetapeent.tech-param-end--
+        default_backend localitservices.tech-backend
+#--localitservices.tech-param-end--
