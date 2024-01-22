@@ -1,15 +1,23 @@
-# UFW Configuration for web-01
+echo -e "Updating\n"
 
-# Deny all incoming traffic by default
+sudo apt-get update
+
+echo -e "Installing UFW\n"
+
+sudo apt-get install -y ufw
+
+echo -e "configuring UFW...\n"
+
+# Allow Outgoings and Deny Incoming
 sudo ufw default deny incoming
-
-# Allow all outgoing traffic by default
 sudo ufw default allow outgoing
 
-# Allow SSH (port 22), HTTPS (port 443), and HTTP (port 80)
+# Allow all ports
 sudo ufw allow 22
-sudo ufw allow 443
 sudo ufw allow 80
+sudo ufw allow 443
 
-# Enable UFW
+# Enable Fires Wall
 sudo ufw enable
+
+echo -e "Process Completed.\n"
