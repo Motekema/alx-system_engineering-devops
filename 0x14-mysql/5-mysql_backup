@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Script to generate MySQL dump, compress it, and store
 
 # variables
