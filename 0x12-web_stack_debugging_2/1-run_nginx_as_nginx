@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# This script configures Nginx to run as the nginx user, IPs on port 8080.
+
+# Update Nginx configuration to run as nginx user
+sed -i 's/user www-data;/user nginx;/' /etc/nginx/nginx.conf
+
+# Ensure the nginx user has the necessary permissions on existing directories
+chown -R nginx:nginx /var/www/html
+
+# Restart Nginx to apply changes
+service nginx restart
+
+# Verify that Nginx is running as nginx user
+ps auxff | grep 'ngin[x]'
+
