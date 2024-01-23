@@ -1,11 +1,41 @@
-#!/usr/bin/env bash
-# backup and compress my databases on.
+#!/bin/bash
+# Script to generate MySQL dump, compress it, and store in a different data center
 
-# variables
-day=$(date +"%d")
-month=$(date +"%m")
-year=$(date +"%Y")
-file_name="$day-$month-$year.tar.gz"
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <mysql_root_password>"
+    exit 1
+fi
 
-mysqldump --all-databases -u root --password="$1" > backup.sql
-tar -czvf "$file_name" backup.sql
+# MySQL root password
+MYSQL_ROOT_PASSWORD=$1
+
+# Directory to store the backup
+BACKUP_DIR="/tmp/mysql_backup"
+
+# Create backup directory if it doesn't exist
+mkdir -p $BACKUP_DIR
+
+# MySQL dump file name
+DUMP_FILE="backup.sql"
+
+# Compressed archive name
+ARCHIVE_NAME=$(date +"%d-%m-%Y").tar.gz
+
+# MySQL dump command
+mysqldump -u root -p$MYSQL_ROOT_PASSWORD --all-databases > $BACKUP_DIR/$DUMP_FILE
+
+# Check if the dump was successful
+if [ $? -ne 0 ]; then
+    echo "MySQL dump failed. Exiting."
+    exit 1
+fi
+
+# Create a tar.gz archive
+tar -czf $BACKUP_DIR/$ARCHIVE_NAME -C $BACKUP_DIR $DUMP_FILE
+
+# Clean up the dump file
+rm $BACKUP_DIR/$DUMP_FILE
+
+# Display the generated archive name
+echo "Backup completed. Archive created: $ARCHIVE_NAME"
+
