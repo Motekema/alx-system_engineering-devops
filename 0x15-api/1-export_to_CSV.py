@@ -6,8 +6,8 @@ Exports data to CSV format.
 """
 
 import csv
-import requests
 from sys import argv
+import requests
 
 if __name__ == "__main__":
     # Check if the correct number of arguments is provided
