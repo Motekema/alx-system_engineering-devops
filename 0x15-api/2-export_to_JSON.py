@@ -50,3 +50,9 @@ if __name__ == "__main__":
         json.dump(json_data, json_file)
 
     print("JSON file '{}' has been created.".format(json_file_name))
+
+    # Check if all tasks are present in the JSON file
+    if len(todo_data) == len(json_data[employee_id]):
+        print("All tasks found: OK")
+    else:
+        print("Number of tasks missing: {}".format(len(todo_data) - len(json_data[employee_id])))
