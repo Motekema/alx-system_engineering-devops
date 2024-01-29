@@ -26,8 +26,7 @@ if __name__ == "__main__":
 
     # Fetch TODO list data
     todo_response = requests.get(
-        "https://jsonplaceholder.typicode.com/todos?userId={}".
-        format(employee_id)
+        "https://jsonplaceholder.typicode.com/todos?userId={}".format(employee_id)
     )
     todo_data = todo_response.json()
 
@@ -35,8 +34,7 @@ if __name__ == "__main__":
     csv_file_name = "{}.csv".format(employee_id)
 
     with open(csv_file_name, mode="w", newline="") as csv_file:
-        fieldnames = ["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", 
-                "TASK_TITLE"]
+        fieldnames = ["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"]
         writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
 
         # Write CSV header
@@ -52,4 +50,3 @@ if __name__ == "__main__":
             })
 
     print("CSV file '{}' has been created.".format(csv_file_name))
-
