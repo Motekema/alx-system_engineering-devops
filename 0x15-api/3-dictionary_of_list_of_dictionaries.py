@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Script that, using a given REST API, retrieves information 
+Script that, using a given REST API, retrieves information
 about all employee TODO lists.
 Exports data to JSON format.
 """
@@ -36,4 +36,4 @@ if __name__ == '__main__':
             })
             """little Something"""
     with open('todo_all_employees.json', 'w') as f:
-         json.dump(users_dict, f)
+        json.dump(users_dict, f)
