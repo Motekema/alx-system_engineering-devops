@@ -6,54 +6,34 @@ Exports data to JSON format.
 
 import json
 import requests
-from sys import argv
+import sys
 
-if __name__ == "__main__":
-    # Check if the correct number of arguments is provided
-    if len(argv) != 1:
-        print("Usage: {} ".format(argv[0]))
-        exit(1)
 
-    # Fetch all users
-    users_response = requests.get("https://jsonplaceholder.typicode.com/users")
-    users_data = users_response.json()
+if __name__ == '__main__':
+    url = "https://jsonplaceholder.typicode.com/users"
 
-    # Create a dictionary to store tasks for each user
-    all_tasks = {}
-    
-    # Fetch tasks for each user
-    for user in users_data:
-        user_id = str(user.get("id"))
-        user_name = user.get("username")
+    resp = requests.get(url)
+    Users = resp.json()
 
-        # Fetch TODO list data for the current user
-        todo_response = requests.get(
-            "https://jsonplaceholder.typicode.com/todos?userId={}".
-            format(user_id)
-        )
-        todo_data = todo_response.json()
+    users_dict = {}
+    for user in Users:
+        USER_ID = user.get('id')
+        USERNAME = user.get('username')
+        url = 'https://jsonplaceholder.typicode.com/users/{}'.format(USER_ID)
+        url = url + '/todos/'
+        resp = requests.get(url)
 
-        # Prepare tasks data for the current user
-        tasks_data = [
-            {
-                "username": user_name,
-                "task": task.get("title"),
-                "completed": task.get("completed"),
-            } for task in todo_data
-        ]
-
-        # Update the dictionary with tasks data for the current user
-        all_tasks[user_id] = tasks_data
-
-    # Create JSON file
-    json_file_name = "todo_all_employees.json"
-
-    # Prepare JSON data for all users
-    json_data = json.dumps(all_tasks)
-
-    # Write JSON data to file
-    with open(json_file_name, mode="w") as json_file:
-        json_file.write(json_data)
-
-    print("JSON file '{}' has been created.".format(json_file_name))
+        tasks = resp.json()
+        users_dict[USER_ID] = []
+        for task in tasks:
+            TASK_COMPLETED_STATUS = task.get('completed')
+            TASK_TITLE = task.get('title')
+            users_dict[USER_ID].append({
+                "task": TASK_TITLE,
+                "completed": TASK_COMPLETED_STATUS,
+                "username": USERNAME
+            })
+            """little Something"""
+    with open('todo_all_employees.json', 'w') as f:
+        json.dump(users_dict, f)
 
