@@ -24,11 +24,7 @@ if __name__ == "__main__":
 
     # Fetch TODO list data
     todo_response = requests.get(
-<<<<<<< HEAD
-    "https://jsonplaceholder.typicode.com/todos?userId={}".format(employee_id)
-=======
-"https://jsonplaceholder.typicode.com/todos?userId={}".format(employee_id)
->>>>>>> 1644a0f979a6d694596d1d66b8e0b24a178bfb61
+        "https://jsonplaceholder.typicode.com/todos?userId={}".format(employee_id)
     )
     todo_data = todo_response.json()
 
@@ -37,11 +33,12 @@ if __name__ == "__main__":
     done_tasks = sum(task.get("completed") for task in todo_data)
 
     # Display information
-    print("Employee {} is done with tasks({}/{}):".format(
-        employee_name, done_tasks, total_tasks
-    ))
+    print(
+        "Employee {} is done with tasks({}/{}):".format(
+            employee_name, done_tasks, total_tasks
+        )
+    )
 
     for task in todo_data:
         if task.get("completed"):
             print("\t {}".format(task.get("title")))
-
