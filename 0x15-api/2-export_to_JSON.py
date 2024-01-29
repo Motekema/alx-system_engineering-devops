@@ -5,54 +5,31 @@ returns information about his/her TODO list progress.
 Exports data to JSON format.
 """
 
+import csv
 import json
-from sys import argv
 import requests
+import sys
 
-if __name__ == "__main__":
-    # Check if the correct number of arguments is provided
-    if len(argv) != 2:
-        print("Usage: {} <employee_id>".format(argv[0]))
-        exit(1)
 
-    employee_id = argv[1]
+if __name__ == '__main__':
+    USER_ID = sys.argv[1]
+    url_to_user = 'https://jsonplaceholder.typicode.com/users/' + USER_ID
+    res = requests.get(url_to_user)
+    """Documentations"""
+    USERNAME = res.json().get('username')
+    """Documentations"""
+    url_to_task = url_to_user + '/todos'
+    res = requests.get(url_to_task)
+    tasks = res.json()
 
-    # Fetch user data
-    user_response = requests.get(
-        "https://jsonplaceholder.typicode.com/users/{}".format(employee_id)
-    )
-    user_data = user_response.json()
-    employee_name = user_data.get("name")
-
-    # Fetch TODO list data
-    todo_response = requests.get(
-        "https://jsonplaceholder.typicode.com/todos?userId={}".
-        format(employee_id)
-    )
-    todo_data = todo_response.json()
-
-    # Create JSON file
-    json_file_name = "{}.json".format(employee_id)
-
-    # Prepare JSON data
-    json_data = {
-        employee_id: [
-            {
-                "task": task.get("title"),
-                "completed": task.get("completed"),
-                "username": employee_name
-            } for task in todo_data
-        ]
-    }
-
-    # Write JSON data to file
-    with open(json_file_name, mode="w") as json_file:
-        json.dump(json_data, json_file)
-
-    print("JSON file '{}' has been created.".format(json_file_name))
-
-    # Check if all tasks are present in the JSON file
-    if len(todo_data) == len(json_data[employee_id]):
-        print("All tasks found: OK")
-    else:
-        print("Number of tasks missing: {}".format(len(todo_data) - len(json_data[employee_id])))
+    dict_data = {USER_ID: []}
+    for task in tasks:
+        TASK_COMPLETED_STATUS = task.get('completed')
+        TASK_TITLE = task.get('title')
+        dict_data[USER_ID].append({
+                                  "task": TASK_TITLE,
+                                  "completed": TASK_COMPLETED_STATUS,
+                                  "username": USERNAME})
+    """prints(dict_data)"""
+    with open('{}.json'.format(USER_ID), 'w') as f:
+        json.dump(dict_data, f)
