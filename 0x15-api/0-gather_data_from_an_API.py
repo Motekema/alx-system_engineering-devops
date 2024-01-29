@@ -24,7 +24,11 @@ if __name__ == "__main__":
 
     # Fetch TODO list data
     todo_response = requests.get(
+<<<<<<< HEAD
     "https://jsonplaceholder.typicode.com/todos?userId={}".format(employee_id)
+=======
+"https://jsonplaceholder.typicode.com/todos?userId={}".format(employee_id)
+>>>>>>> 1644a0f979a6d694596d1d66b8e0b24a178bfb61
     )
     todo_data = todo_response.json()
 
