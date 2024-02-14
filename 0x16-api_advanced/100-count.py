@@ -5,12 +5,13 @@
 
 import requests
 
+
 def count_words(subreddit, word_list, after=None, counts={}):
     """
     Recursively counts occurrences of words in hot articles of a subreddit
     """
     url = f"https://www.reddit.com/r/{subreddit}/hot.json"
-    headers = {'User-Agent': 'Custom User Agent'}  # Ensure a custom User-Agent header is set
+    headers = {'User-Agent': 'Custom User Agent'}
     params = {'limit': 100, 'after': after}
 
     response = requests.get(url, headers=headers, params=params)
