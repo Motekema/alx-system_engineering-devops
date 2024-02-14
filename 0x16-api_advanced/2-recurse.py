@@ -5,12 +5,13 @@
 
 import requests
 
+
 def recurse(subreddit, hot_list=[], after=None):
     """
-    Returns a list containing the titles of all hot articles for a given subreddit
+    list containing the titles of all hot articles for a given subreddit
     """
     url = f"https://www.reddit.com/r/{subreddit}/hot.json"
-    headers = {'User-Agent': 'Custom User Agent'}  # Ensure a custom User-Agent header is set
+    headers = {'User-Agent': 'Custom User Agent'}
     params = {'limit': 100, 'after': after}
 
     response = requests.get(url, headers=headers, params=params)
