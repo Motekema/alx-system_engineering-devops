@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Script to install Datadog agent on web-01
+
+# Download and install the Datadog agent
+curl -o /tmp/datadog-agent.sh https://s3.amazonaws.com/dd-agent/scripts/install_script.sh
+DD_API_KEY=37c08f8cf00e508a86a6dfee6b497cca DD_SITE="datadoghq.com" bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script_agent7.sh)" bash /tmp/datadog-agent.sh
+
+# Replace YOUR_API_KEY with your actual Datadog API key
+
