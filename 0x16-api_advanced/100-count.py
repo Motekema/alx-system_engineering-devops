@@ -28,8 +28,7 @@ def count_words(subreddit, word_list, after=None, counts={}):
             if after:
                 count_words(subreddit, word_list, after, counts)
             else:
-                sorted_counts = sorted(counts.items(), key=lambda x: (-x[1],
-                    x[0]))
+                sorted_counts = sorted(counts.items(), key=lambda x: (-x[1], x[0]))
                 for word, count in sorted_counts:
                     print(f"{word}: {count}")
         else:
@@ -37,11 +36,11 @@ def count_words(subreddit, word_list, after=None, counts={}):
     else:
         return
 
+
 if __name__ == "__main__":
     import sys
     if len(sys.argv) < 3:
         print("Usage: {} <subreddit> <list of keywords>".format(sys.argv[0]))
-        print("Ex: {} programming 'python java javascript'".
-                format(sys.argv[0]))
+        print("Ex: {} programming 'python java javascript'".format(sys.argv[0]))
     else:
         count_words(sys.argv[1], [x for x in sys.argv[2].split()])
