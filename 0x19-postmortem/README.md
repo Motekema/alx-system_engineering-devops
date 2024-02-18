@@ -1,6 +1,6 @@
 # Postmortem: Service Outage on Web Application
 
-![Funny Cat]((https://i.pinimg.com/564x/7c/cd/3a/7ccd3a4fb4b0ba3f186646c0fe6001df.jpg))
+![Funny Cat](https://i.pinimg.com/564x/7c/cd/3a/7ccd3a4fb4b0ba3f186646c0fe6001df.jpg)
 
 ## Issue Summary:
 - **Duration:** February 17, 2024, 10:00 AM - February 17, 2024, 2:00 PM (UTC)
