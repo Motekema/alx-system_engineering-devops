@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# This script reloads Gunicorn in a graceful way
+
+# Get the process IDs of Gunicorn workers
+worker_pids=$(pgrep -f "gunicorn --bind")
+
+# Send a TERM signal to each worker to gracefully shut it down
+for pid in $worker_pids; do
+    echo "Stopping worker with PID: $pid"
+    kill -TERM $pid
+    # Wait for the worker to stop
+    while kill -0 $pid 2>/dev/null; do
+        sleep 1
+    done
+done
+
+# Start Gunicorn again
+echo "Starting Gunicorn..."
+# Replace this command with the actual command to start Gunicorn with the desired configuration
+# For example:
+# /path/to/gunicorn --bind 0.0.0.0:8000 myapp:app
