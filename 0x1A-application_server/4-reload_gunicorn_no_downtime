@@ -1,21 +1,16 @@
 #!/usr/bin/env bash
-# This script reloads Gunicorn in a graceful way
+# This script reloads Gunicorn without downtime by gracefully restarting workers
 
-# Get the process IDs of Gunicorn workers
-worker_pids=$(pgrep -f "gunicorn --bind")
+# Get the PID of Gunicorn master process
+master_pid=$(pgrep -f "gunicorn.*web_flask")
 
-# Send a TERM signal to each worker to gracefully shut it down
-for pid in $worker_pids; do
-    echo "Stopping worker with PID: $pid"
-    kill -TERM $pid
-    # Wait for the worker to stop
-    while kill -0 $pid 2>/dev/null; do
-        sleep 1
-    done
-done
+# Check if Gunicorn master process is running
+if [ -z "$master_pid" ]; then
+    echo "Gunicorn master process is not running."
+    exit 1
+fi
 
-# Start Gunicorn again
-echo "Starting Gunicorn..."
-# Replace this command with the actual command to start Gunicorn with the desired configuration
-# For example:
-# /path/to/gunicorn --bind 0.0.0.0:8000 myapp:app
+# Reload Gunicorn by sending HUP signal to master process
+kill -s HUP "$master_pid"
+
+echo "Gunicorn master process ($master_pid) is reloading..."
